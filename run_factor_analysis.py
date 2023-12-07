@@ -40,12 +40,18 @@ output = machine.loadings_
 
 machine = FactorAnalyzer(n_factors=5, rotation='varimax')
 machine.fit(dataset)
-output = machine.loadings_
-print(output)
+factor_loadings = machine.loadings_
+print(factor_loadings)
+
 #It organizies the questions by their corresponding personality. 
 #For example, the first five rows will be similiar and will correspond to one column, by having all the high values in one column. 
 
 #Back to the main reason why we're doing this. 
 #We have 4000+ people. We need to assign one personality to all people. 
 
-dataset = dataset.values 
+dataset = dataset.values
+
+results = numpy.dot(dataset, factor_loadings)
+
+pandas.DataFrame(results).round().to_csv("results.csv", index=False)
+
